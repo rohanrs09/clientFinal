@@ -1,70 +1,149 @@
-# Getting Started with Create React App
+# SHMS Frontend (React Application)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend client for the Smart Hotel Management System (SHMS), built with React and Tailwind CSS.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Responsive design that works on desktops, tablets, and mobile devices
+- Role-based access control for guests, hotel managers, and administrators
+- Interactive UI for booking rooms, managing hotels, and admin operations
+- JWT authentication for secure user sessions
+- Real-time validation for forms and user input
 
-### `npm start`
+## Project Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The React client is organized as follows:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+client/
+├── public/          # Static files
+├── src/             # Source code
+│   ├── components/  # Reusable UI components
+│   ├── context/     # React context providers (auth, etc.)
+│   ├── pages/       # Page components
+│   ├── services/    # API service layer
+│   ├── utils/       # Utility functions
+│   ├── App.js       # Main application component
+│   └── index.js     # Application entry point
+└── package.json     # Dependencies and scripts
+```
 
-### `npm test`
+## Key Components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Authentication**: JWT-based authentication with protected routes
+- **Context API**: Global state management for user authentication
+- **Service Layer**: Abstraction for API communication
+- **Responsive UI**: Tailwind CSS for responsive design
+- **Form Validation**: Client-side validation for user inputs
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm (v6 or higher)
+- SHMS backend API running at http://localhost:5217
+
+### Installation
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start the development server:
+
+```bash
+npm start
+```
+
+The application will be available at http://localhost:3000.
+
+### Environment Variables
+
+Create a `.env` file in the client directory with the following variables:
+
+```
+REACT_APP_API_URL=http://localhost:5217/api
+```
+
+## User Interfaces
+
+### Guest Interface
+
+- Home page with hotel search
+- Hotel details with room listings
+- Booking form for room reservation
+- Guest dashboard for managing bookings and reviews
+- Profile management
+
+### Hotel Manager Interface
+
+- Manager dashboard
+- Hotel management (details, amenities)
+- Room management (add, edit, availability)
+- Booking overview
+- Review management
+
+### Admin Interface
+
+- Admin dashboard
+- User management
+- Hotel and manager assignment
+- System-wide statistics
+
+## Building for Production
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+This creates an optimized build in the `build` folder that can be deployed to any static hosting service.
+
+## Testing
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **API Connection Problems**
+   - Ensure the backend API is running
+   - Check the API URL in the `.env` file or `src/services/api.js`
+
+2. **Authentication Issues**
+   - Clear browser localStorage and cookies
+   - Verify that the JWT token is being sent in API requests
+
+3. **UI Rendering Problems**
+   - Check browser console for JavaScript errors
+   - Verify that you're using a supported browser
+
+## Additional Scripts
+
+In the project directory, you can also run:
 
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+It correctly bundles React in production mode and optimizes the build for performance.
 
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+This command will remove the Create React App build dependency from your project and copy all configuration files and dependencies directly into your project.
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [React Documentation](https://reactjs.org/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Create React App Documentation](https://facebook.github.io/create-react-app/docs/getting-started)

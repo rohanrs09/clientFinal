@@ -201,11 +201,40 @@ const ManagerDashboard = () => {
   
   const handleToggleRoomAvailability = async (roomId, currentAvailability) => {
     try {
+      setError(''); // Clear any previous errors
+      setFormSuccess(''); // Clear any previous success messages
+      
       const roomToUpdate = rooms.find(room => room.roomID === roomId);
-      if (!roomToUpdate) return;
+      if (!roomToUpdate) {
+        setError('Room not found');
+        return;
+      }
       
-      const updatedRoom = { ...roomToUpdate, availability: !currentAvailability };
+      // Show loading indicator for just this operation while preserving other UI elements
+      const loadingElement = document.getElementById(`room-action-${roomId}`);
+      if (loadingElement) {
+        loadingElement.innerHTML = '<span class="inline-block animate-spin mr-2">⟳</span> Updating...';
+      }
       
+      // Ensure the room data meets the backend validation requirements
+      // Especially the price which must be between 1000 and 1000000000
+      const price = parseFloat(roomToUpdate.price);
+      if (isNaN(price) || price < 1000) {
+        // If price is invalid, set a minimum valid price
+        roomToUpdate.price = 1000;
+      }
+      
+      // Create a properly formatted room object
+      const updatedRoom = {
+        roomID: parseInt(roomId),
+        hotelID: parseInt(roomToUpdate.hotelID),
+        type: roomToUpdate.type || "Standard", // Ensure type is not empty
+        price: parseFloat(roomToUpdate.price), // Ensure price is a number and valid
+        availability: !currentAvailability, // Toggle the availability
+        features: roomToUpdate.features || "" // Ensure features is not null
+      };
+      
+      console.log('Updating room availability:', updatedRoom);
       const response = await roomService.updateRoom(roomId, updatedRoom);
       
       if (response.success) {
@@ -215,12 +244,22 @@ const ManagerDashboard = () => {
             room.roomID === roomId ? { ...room, availability: !currentAvailability } : room
           )
         );
+        setFormSuccess(`Room availability ${!currentAvailability ? 'enabled' : 'disabled'} successfully`);
+        
+        // Clear success message after 3 seconds
+        setTimeout(() => setFormSuccess(''), 3000);
       } else {
-        setError('Failed to update room availability. Please try again.');
+        setError(`Failed to update room availability: ${response.message}`);
       }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
       console.error('Error updating room availability:', err);
+    } finally {
+      // Reset loading state for the specific button
+      const loadingElement = document.getElementById(`room-action-${roomId}`);
+      if (loadingElement) {
+        loadingElement.innerHTML = currentAvailability ? 'Set Unavailable' : 'Set Available';
+      }
     }
   };
   
@@ -360,7 +399,7 @@ const ManagerDashboard = () => {
             </Card>
             
             {/* Rooms Management */}
-            <Card title="Manage Rooms" className="mb-8">
+            <Card title="Room Management" className="mb-8">
               {rooms.length === 0 ? (
                 <div className="text-center py-6">
                   <p className="text-gray-500 mb-4">No rooms added yet for this hotel.</p>
@@ -409,14 +448,17 @@ const ManagerDashboard = () => {
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                              <Button 
-                                variant={room.availability ? 'warning' : 'success'} 
-                                className="mr-2"
-                                onClick={() => handleToggleRoomAvailability(room.roomID, room.availability)}
-                              >
-                                {room.availability ? 'Set Unavailable' : 'Set Available'}
-                              </Button>
-                              <Button variant="outline">Edit</Button>
+                              <div className="flex flex-wrap gap-2">
+                                <Button 
+                                  variant={room.availability ? 'warning' : 'success'} 
+                                  size="sm"
+                                  onClick={() => handleToggleRoomAvailability(room.roomID, room.availability)}
+                                  id={`room-action-${room.roomID}`}
+                                >
+                                  {room.availability ? 'Set Unavailable' : 'Set Available'}
+                                </Button>
+                                <Button variant="outline" size="sm">Edit</Button>
+                              </div>
                             </td>
                           </tr>
                         ))}

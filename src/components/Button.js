@@ -6,11 +6,12 @@ const Button = ({
   onClick, 
   className = '', 
   variant = 'primary',
+  size = 'md',
   disabled = false,
   fullWidth = false
 }) => {
   
-  const baseStyles = 'font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200';
+  const baseStyles = 'font-bold rounded focus:outline-none focus:shadow-outline transition-colors duration-200';
   
   const variantStyles = {
     primary: 'bg-blue-500 hover:bg-blue-700 text-white',
@@ -25,6 +26,14 @@ const Button = ({
     outline: 'border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white'
   };
   
+  const sizeStyles = {
+    xs: 'py-1 px-2 text-xs',
+    sm: 'py-1 px-3 text-sm',
+    md: 'py-2 px-4 text-base',
+    lg: 'py-3 px-6 text-lg',
+    xl: 'py-4 px-8 text-xl'
+  };
+  
   const widthStyles = fullWidth ? 'w-full' : '';
   const disabledStyles = disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer';
   
@@ -33,7 +42,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`${baseStyles} ${variantStyles[variant]} ${widthStyles} ${disabledStyles} ${className}`}
+      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${disabledStyles} ${className}`}
     >
       {children}
     </button>
