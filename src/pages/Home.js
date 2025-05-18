@@ -124,126 +124,190 @@ const Home = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* API Tester for debugging (only visible in development) */}
-        {process.env.NODE_ENV === 'development' && <ApiTester />}
+    <div className="bg-gray-50 min-h-screen">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-r from-blue-600 to-indigo-800 overflow-hidden">
+        {/* Background pattern */}
+        <div className="hidden sm:block sm:absolute sm:inset-0">
+          <svg className="absolute bottom-0 right-0 transform translate-x-1/2 mb-48 text-blue-500 lg:top-0 lg:mt-28 lg:mb-0 xl:transform-none xl:translate-x-0 opacity-10" width="404" height="404" fill="none" viewBox="0 0 404 404" aria-hidden="true">
+            <defs>
+              <pattern id="85737c0e-0916-41d7-917f-596dc7edfa27" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="4" height="4" className="text-white" fill="currentColor" />
+              </pattern>
+            </defs>
+            <rect width="404" height="404" fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
+          </svg>
+        </div>
         
-        {/* API Connection Status */}
-        {connectionStatus && (
-          <div className={`mb-4 p-3 rounded ${connectionStatus.includes('✅') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-            {connectionStatus}
+        <div className="pt-10 pb-12 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-28 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+              <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+                <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
+                  <span className="block">Find Your Perfect</span>
+                  <span className="block text-indigo-200">Hotel Stay</span>
+                </h1>
+                <p className="mt-3 text-base text-white sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                  Discover amazing places to stay around the world with our curated selection of luxury hotels, cozy apartments, and unique accommodations.
+                </p>
+              </div>
+              
+              <div className="mt-12 sm:mt-16 lg:mt-0 lg:col-span-6">
+                <div className="bg-white sm:max-w-md sm:w-full sm:mx-auto sm:rounded-lg sm:overflow-hidden shadow-xl">
+                  <div className="px-4 py-8 sm:px-6">
+                    <div className="text-center">
+                      <h2 className="text-2xl font-bold text-gray-900">
+                        Search Hotels
+                      </h2>
+                      <p className="mt-1 text-sm text-gray-600">
+                        Find the perfect accommodation for your next trip
+                      </p>
+                    </div>
+                    
+                    <form className="mt-6 space-y-4" onSubmit={handleSearch}>
+                      <div>
+                        <label htmlFor="location" className="sr-only">Location</label>
+                        <div className="relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                          </div>
+                          <input
+                            id="location"
+                            name="location"
+                            type="text"
+                            value={searchLocation}
+                            onChange={(e) => setSearchLocation(e.target.value)}
+                            className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-3"
+                            placeholder="Where are you going?"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="amenities" className="sr-only">Amenities</label>
+                        <div className="relative rounded-md shadow-sm">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                          </div>
+                          <input
+                            id="amenities"
+                            name="amenities"
+                            type="text"
+                            value={searchAmenities}
+                            onChange={(e) => setSearchAmenities(e.target.value)}
+                            className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-3"
+                            placeholder="Amenities (e.g. Pool, WiFi, Gym)"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Button 
+                          type="submit" 
+                          variant="gradient-blue" 
+                          fullWidth 
+                          size="lg"
+                          rounded="md"
+                          loading={loading}
+                          loadingText="Searching..."
+                        >
+                          Search Hotels
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Hotels List */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-3xl font-extrabold text-gray-900 mb-8">
+          {searchLocation && searchAmenities ? 'Search Results' : 'Featured Hotels'}
+        </h2>
+        
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600"></div>
+          </div>
+        ) : error ? (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+            <span className="block sm:inline">{error}</span>
+          </div>
+        ) : hotels.length === 0 ? (
+          <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-8 rounded-lg text-center">
+            <svg className="h-12 w-12 mx-auto text-yellow-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <h3 className="text-lg font-medium mb-2">No hotels found</h3>
+            <p className="text-yellow-700">Try adjusting your search criteria or explore our featured hotels.</p>
+          </div>
+        ) : (
+          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {hotels.map((hotel) => (
+              <div 
+                key={hotel.hotelID}
+                className="group bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              >
+                <div className="h-48 bg-gradient-to-r from-blue-500 to-indigo-600 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <h3 className="text-2xl font-bold text-white px-4 text-center">{hotel.name}</h3>
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <div className="flex items-center mb-4">
+                    <svg className="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p className="text-gray-600">{hotel.location}</p>
+                  </div>
+                  
+                  {hotel.amenities && (
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-gray-500 mb-2">Amenities</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {hotel.amenities.split(',').map((amenity, index) => (
+                          <span 
+                            key={index}
+                            className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                          >
+                            {amenity.trim()}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="mt-6 flex justify-between items-center">
+                    <div>
+                      <p className="text-sm text-gray-600">{hotel.rooms?.length || 0} rooms available</p>
+                    </div>
+                    <Link to={`/hotels/${hotel.hotelID}`}>
+                      <Button 
+                        variant="primary" 
+                        size="sm"
+                        rounded="md"
+                        className="group-hover:bg-blue-700 transition-colors duration-300"
+                      >
+                        View Details
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
-        
-        {/* Hero Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg shadow-xl overflow-hidden mb-8">
-          <div className="px-6 py-12 md:px-12 text-center md:text-left">
-            <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
-              Find Your Perfect Stay
-            </h1>
-            <p className="mt-4 text-lg text-blue-100 max-w-3xl">
-              Search from our vast selection of hotels and find the perfect accommodation for your next trip.
-            </p>
-            
-            {/* Search Form */}
-            <div className="mt-8">
-              <form onSubmit={handleSearch} className="sm:flex">
-                <div className="min-w-0 flex-1">
-                  <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-4">
-                    <input
-                      type="text"
-                      name="location"
-                      id="location"
-                      value={searchLocation}
-                      onChange={(e) => setSearchLocation(e.target.value)}
-                      className="block w-full rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500"
-                      placeholder="Location (city, region)"
-                    />
-                    <input
-                      type="text"
-                      name="amenities"
-                      id="amenities"
-                      value={searchAmenities}
-                      onChange={(e) => setSearchAmenities(e.target.value)}
-                      className="block w-full rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500"
-                      placeholder="Amenities (wifi, pool, etc.)"
-                    />
-                  </div>
-                </div>
-                <div className="mt-4 sm:mt-0 sm:ml-3">
-                  <Button 
-                    type="submit" 
-                    variant="light" 
-                    className="w-full"
-                  >
-                    Search
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        
-        {/* Hotels List */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
-            Our Featured Hotels
-          </h2>
-          
-          {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <Spinner size="lg" />
-            </div>
-          ) : error ? (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
-              <span className="block sm:inline">{error}</span>
-            </div>
-          ) : hotels.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No hotels found. Please try a different search.</p>
-            </div>
-          ) : (
-            <div className="mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {hotels.map((hotel) => (
-                <div key={hotel.hotelID} className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:shadow-xl hover:-translate-y-1">
-                  <div className="h-40 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                    <div className="font-bold text-white text-3xl px-4 text-center">{hotel.name}</div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center mb-3">
-                      <svg className="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <p className="text-gray-700 font-medium">{hotel.location}</p>
-                    </div>
-                    
-                    <div className="mb-3">
-                      {renderStarRating(hotel.rating)}
-                    </div>
-                    
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-900 mb-1">Amenities:</h4>
-                      {renderAmenities(hotel.amenities) || <p className="text-sm text-gray-500">No amenities listed</p>}
-                    </div>
-                    
-                    <div className="mt-4 flex justify-between items-center">
-                      <div>
-                        <p className="text-sm text-gray-600">{hotel.rooms?.length || 0} rooms available</p>
-                      </div>
-                      <Link to={`/hotels/${hotel.hotelID}`}>
-                        <Button variant="primary" className="px-4">
-                          View Details
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
