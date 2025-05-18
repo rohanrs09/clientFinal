@@ -11,7 +11,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    role: 'guest'
+    role: 'user'
   });
   
   const [errors, setErrors] = useState({});
@@ -175,8 +175,8 @@ const Login = () => {
                     id="guest"
                     name="role"
                     type="radio"
-                    value="guest"
-                    checked={formData.role === 'guest'}
+                    value="user"
+                    checked={formData.role === 'user'}
                     onChange={handleChange}
                     className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                   />
